@@ -1,6 +1,7 @@
 #include <stdbool.h>
 
 #define CREATE_COLOR(A, B) init_pair(A, B, COLOR_BLACK)
+#define R2_BACKSPACE 127
 
 typedef struct
 {

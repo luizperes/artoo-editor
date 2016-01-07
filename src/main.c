@@ -56,8 +56,13 @@ void run()
       move(point.y, point.x);
       continue;
     }
-   
-    addch(c);
+    else if (c == R2_BACKSPACE)
+    {
+      mvdelch(point.y, point.x - 1);
+      continue;
+    }
+     
+     addch(c);
   }
 }
 
