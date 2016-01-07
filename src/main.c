@@ -1,12 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <curses.h>
-
-#define CREATE_COLOR(A, B) init_pair(A, B, COLOR_BLACK)
-#define PACMAN_VALUE 1
-#define MONSTER_VALUE 2
-#define FOOD_VALUE 3
-#define WALL_VALUE 4
+#include "main.h"
 
 void init();
 void run();
@@ -14,7 +9,7 @@ void kill();
 
 void init_colors();
 
-int main()
+int main(int argc, char** argv)
 {
   init();
   run();
@@ -27,18 +22,15 @@ void init()
 {
   initscr();
   noecho();
+  scrollok(stdscr, TRUE);
   init_colors();
 }
 
 void init_colors()
 {
-  if (has_colors())
+  if (has_colors() && !R2_SHOULD_NOT_USE_COLORS)
   {
     start_color();
-    CREATE_COLOR(PACMAN_VALUE, COLOR_YELLOW);
-    CREATE_COLOR(MONSTER_VALUE, COLOR_GREEN);
-    CREATE_COLOR(FOOD_VALUE, COLOR_CYAN);
-    CREATE_COLOR(WALL_VALUE, COLOR_WHITE);
   }
 }
 
@@ -46,9 +38,18 @@ void run()
 {
   while(1)
   {
-    attrset(COLOR_PAIR(rand() % 4));
+    if (!R2_SHOULD_NOT_USE_COLORS)
+      attrset(COLOR_PAIR(rand() % 2));
+   
+    int curY, curX; 
+    getyx(stdscr, curY, curX);
+    
     int c = getch();
-    if (c >= 32 && c <= 126)
+    if (c == 10)
+      addch('\n');
+    else if (c == KEY_LEFT)
+     return;	
+    else if (c >= 32 && c <= 126)
       addch(c);
   }
 }
