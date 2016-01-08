@@ -5,17 +5,10 @@
  * Copyright Luiz Peres, 2016.
  */
 
+#ifndef _INCLUDE_HEADERS_
+#define _INCLUDE_HEADERS_
 
-#include <stdbool.h>
+#include <curses.h>
+#include <stdlib.h>
 
-#define CREATE_COLOR(A, B) init_pair(A, B, COLOR_BLACK)
-#define R2_BACKSPACE 127
-
-typedef struct
-{
-  int x;
-  int y;
-}R2Point;
-
-
-bool R2_SHOULD_NOT_USE_COLORS = true;
+#endif

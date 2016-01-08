@@ -1,7 +1,14 @@
+/* This is the source code of Artoo Editor.
+ * It is licensed under GNU GPL v. 2 or later.
+ * You should have received a copy of the license in this archive (see LICENSE).
+ *
+ * Copyright Luiz Peres, 2016.
+ */
+
 #include <stdio.h>
-#include <stdlib.h>
-#include <curses.h>
+#include "include.h" 
 #include "artoo.h"
+#include "R2Window.h"
 
 void init();
 void run();
@@ -11,10 +18,17 @@ void handleKey(int c, R2Point* p);
 
 int main(int argc, char** argv)
 {
-  init();
-  run();
-  kill();
-
+  //init();
+ // run();
+ // kill();
+  initscr();
+  cbreak();
+  noecho();
+  
+  R2Window* mywin = R2Window_new(0,0,0,0,BT_SOLID);
+  
+  wgetch(mywin->window);
+  endwin();
   return 0;
 }
 
