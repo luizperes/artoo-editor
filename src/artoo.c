@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <curses.h>
-#include "main.h"
+#include "artoo.h"
 
 void init();
 void run();
