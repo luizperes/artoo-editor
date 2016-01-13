@@ -15,23 +15,19 @@
 
 static void R2WindowManager_init();
 static void R2WindowManager_deinit();
+static void R2WindowManager_resizeHandler(int sig);
 
 void R2WindowManager_run()
 {
   R2WindowManager_init();
 
-  int parent_win_x = 0;
-  int parent_win_y = 0;
-  int new_x = 0;
-  int new_y = 0;
-  
-  R2WindowManager_getParentWindowMaxYX(parent_win_y, parent_win_x);
-  R2Window *editorWin = R2Window_new(parent_win_y - SIZE_ROWS_TERMINAL, parent_win_x, 0, 0, BT_DASHED);
-  R2Window *terminalWin = R2Window_new(SIZE_ROWS_TERMINAL, parent_win_x, parent_win_y - SIZE_ROWS_TERMINAL, 0, BT_DASHED);
+  R2WindowManager_getParentWindowMaxYX(LINES, COLS);
+  R2Window *editorWin = R2Window_new(LINES - SIZE_ROWS_TERMINAL, COLS, 0, 0, BT_DASHED);
+  R2Window *terminalWin = R2Window_new(SIZE_ROWS_TERMINAL, COLS, LINES - SIZE_ROWS_TERMINAL, 0, BT_DASHED);
 
   while(1)  
   { 
-    R2WindowManager_getParentWindowMaxYX(new_y, new_x);
+    /*R2WindowManager_getParentWindowMaxYX(new_y, new_x);
     if (new_y != parent_win_y || new_x != parent_win_x)
     {
       parent_win_y = new_y;
@@ -41,7 +37,7 @@ void R2WindowManager_run()
       R2Window_resizeAndGotoYX(terminalWin, SIZE_ROWS_TERMINAL, new_x, new_y - SIZE_ROWS_TERMINAL, 0);
     }
     
-    R2WindowManager_updateAllWindows();
+    R2WindowManager_updateAllWindows();*/
   }  
 
   R2Window_release(editorWin);
@@ -54,7 +50,12 @@ static void R2WindowManager_init()
   initscr();
   cbreak();
   noecho();
-  curs_set(TRUE);
+  signal(SIGWINCH, R2WindowManager_resizeHandler);
+}
+
+static void R2WindowManager_resizeHandler(int sig)
+{
+  
 }
 
 static void R2WindowManager_deinit()

@@ -11,6 +11,7 @@
 #include <stdbool.h>
 #include <curses.h>
 #include <stdlib.h>
+#include <signal.h>
 
 #define R2_CREATE_COLOR(A, B) init_pair(A, B, COLOR_BLACK)
 #define R2_BACKSPACE 127
