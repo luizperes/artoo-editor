@@ -7,12 +7,12 @@
 
 #include "R2Window.h"
 
-static void R2Window_drawBorders(R2Window* this);
-static void R2Window_drawDashedBorders(R2Window* this);
+static void R2Window_drawBorders(R2Window *this);
+static void R2Window_drawDashedBorders(R2Window *this);
 
 R2Window* R2Window_new(int nlines, int ncols, int begin_y, int begin_x, R2Border_Type borderType)
 {
-  R2Window* this = (R2Window*) malloc(sizeof(R2Window));
+  R2Window *this = (R2Window*) malloc(sizeof(R2Window));
   this->borderType = borderType;
   this->window = newwin(nlines, ncols, begin_y, begin_x);
   R2Window_drawBorders(this);
@@ -56,7 +56,7 @@ static void R2Window_drawDashedBorders(R2Window* this)
   }
 }
 
-void R2Window_release(R2Window* this)
+void R2Window_release(R2Window *this)
 {
   delwin(this->window);
   free(this);

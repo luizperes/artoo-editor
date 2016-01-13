@@ -5,17 +5,12 @@
  * Copyright Luiz Peres, 2016.
  */
 
+#include "R2WindowManager.h"
 
-#include <stdbool.h>
-
-#define CREATE_COLOR(A, B) init_pair(A, B, COLOR_BLACK)
-#define R2_BACKSPACE 127
-
-typedef struct
+void R2WindowManager_run()
 {
-  int x;
-  int y;
-}R2Point;
+}
 
-
-bool R2_SHOULD_NOT_USE_COLORS = true;
+void R2WindowManager_stop()
+{
+}

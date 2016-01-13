@@ -1,7 +1,7 @@
 CC=clang
 CFLAGS=-lncurses
-DEPS = include.h artoo.h R2Window.h
-OBJ = artoo.o R2Window.o 
+DEPS = include.h R2Window.h R2WindowManager.h
+OBJ = R2Window.o R2WindowManager.o artoo.o
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)

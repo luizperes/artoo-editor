@@ -5,12 +5,12 @@
  * Copyright Luiz Peres, 2016.
  */
 
-#include "include.h" 
-#include "R2WindowManager.h"
+#ifndef _R2WindowManager_H
+#define _R2WindowManager_H
 
-int main(int argc, char **argv)
-{
-  R2WindowManager_run();
+#include "include.h"
 
-  return 0;
-}
+void R2WindowManager_run();
+void R2WindowManager_stop();
+
+#endif

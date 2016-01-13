@@ -16,6 +16,7 @@
 #define R2Window_keypad(_this, _enabled) keypad(_this->window, _enabled)
 #define R2Window_refresh(_this) wrefresh(_this->window)
 #define R2Window_gotoYXAndPrint(_this, _y, _x, _str) mvwprintw(_this->window, _y, _x, _str) 
+#define R2Window_clear(_this) wclear(_this)
 
 typedef enum _R2Border_Type
 {
@@ -26,11 +27,11 @@ typedef enum _R2Border_Type
 
 typedef struct _R2Window
 {
-  WINDOW* window;
+  WINDOW *window;
   R2Border_Type borderType;
 } R2Window;
 
 R2Window* R2Window_new(int nlines, int ncols, int begin_y, int begin_x, R2Border_Type borderType);
-void R2Window_release(R2Window* this);
+void R2Window_release(R2Window *this);
 
 #endif
