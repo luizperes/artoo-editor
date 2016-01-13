@@ -7,7 +7,7 @@
 
 #include "R2Window.h"
 
-static void R2Window_drawBorders(R2Window *this);
+static void R2Window_drawBorders(R2Window *this, bool refresh);
 static void R2Window_drawDashedBorders(R2Window *this);
 
 R2Window* R2Window_new(int nlines, int ncols, int begin_y, int begin_x, R2Border_Type borderType)
@@ -15,21 +15,22 @@ R2Window* R2Window_new(int nlines, int ncols, int begin_y, int begin_x, R2Border
   R2Window *this = (R2Window*) malloc(sizeof(R2Window));
   this->borderType = borderType;
   this->window = newwin(nlines, ncols, begin_y, begin_x);
-  R2Window_drawBorders(this);
+  R2Window_drawBorders(this, true);
   return this;
 }
 
-static void R2Window_drawBorders(R2Window* this)
+static void R2Window_drawBorders(R2Window *this, bool refresh)
 {
   if (this->borderType == BT_SOLID)
       box(this->window, 0, 0);
   else if (this->borderType == BT_DASHED)
       R2Window_drawDashedBorders(this); 
 
-  R2Window_refresh(this);
+  if (refresh)
+    R2Window_refresh(this);
 }
 
-static void R2Window_drawDashedBorders(R2Window* this)
+static void R2Window_drawDashedBorders(R2Window *this)
 {
   int x, y, i;
 
@@ -54,6 +55,15 @@ static void R2Window_drawDashedBorders(R2Window* this)
     R2Window_gotoYXAndPrint(this, 0, i, "-");
     R2Window_gotoYXAndPrint(this, y - 1, i, "-");
   }
+}
+
+void R2Window_resizeAndGotoYX(R2Window *this, int nlines, int ncols, int y, int x)
+{
+  wresize(this->window, y, x);
+  R2Window_move(this, y, x);
+  R2Window_clear(this);
+  R2Window_drawBorders(this, false);
+  wnoutrefresh(this->window);  
 }
 
 void R2Window_release(R2Window *this)
