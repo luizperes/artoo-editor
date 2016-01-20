@@ -12,8 +12,8 @@
 #define R2WindowManager_getParentWindowMaxYX(_y, _x) getmaxyx(PARENT, _y, _x)
 #define R2WindowManager_updateAllWindows() doupdate()
 #define SIZE_ROWS_TERMINAL 3
-#define EDITOR_WIN_TYPE_BORDER BT_SOLID
-#define TERMINAL_WIN_TYPE_BORDER BT_SOLID
+#define EDITOR_WIN_TYPE_BORDER BT_NONE
+#define TERMINAL_WIN_TYPE_BORDER BT_NONE 
 
 // This global variables exist because it is necessary when
 // we refresh the window through SIGWINCH

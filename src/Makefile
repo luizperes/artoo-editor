@@ -10,4 +10,5 @@ OBJ = R2Window.o R2WindowManager.o artoo.o
 artoo: $(OBJ)
 	clang -o $@ $^ $(CFLAGS)
 
-
+clean:
+	rm $(OBJ) *.h.gch
