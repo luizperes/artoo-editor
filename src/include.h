@@ -10,18 +10,8 @@
 
 #include <stdbool.h>
 #include <curses.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
-
-#define R2_CREATE_COLOR(A, B) init_pair(A, B, COLOR_BLACK)
-#define R2_BACKSPACE 127
-
-typedef struct
-{
-  int x;
-  int y;
-}R2Point;
-
-extern const bool R2_SHOULD_NOT_USE_COLORS;
 
 #endif

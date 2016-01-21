@@ -6,11 +6,13 @@
  */
 
 #include "include.h" 
+#include "R2Settings.h"
 #include "R2WindowManager.h"
 
 int main(int argc, char **argv)
 {
-  R2WindowManager_run();
+  if(R2Settings_init(argc, argv))
+    R2WindowManager_run();
 
   return 0;
 }
