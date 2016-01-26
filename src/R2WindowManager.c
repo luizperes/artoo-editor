@@ -5,6 +5,7 @@
  * Copyright Luiz Peres, 2016.
  */
 
+#include "R2Settings.h"
 #include "R2WindowManager.h"
 #include "R2Window.h"
 
