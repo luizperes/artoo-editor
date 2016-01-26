@@ -63,12 +63,16 @@ static bool R2Settings_handleArgs(int argc, char **argv)
     {
       const bool R2_SHOULD_NOT_USE_COLORS = true;
     }
-    else
-    {
+    else  if (strstr(argv[i], "-") != NULL || strstr(argv[i], "--") != NULL)
+    { 
       char *formattedStr = R2Settings_getWrongParams(argv[i]);
       printf("%s\n%s\n", formattedStr, R2Settings_getHelpOption());
       free(formattedStr);
       return false;
+    }
+    else
+    {
+      const char* R2_FILE_NAME = argv[i];
     }
   } 
 
