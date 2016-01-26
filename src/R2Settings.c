@@ -11,6 +11,7 @@
 #define R2Settings_HELP_OPTION "Use the identifier '--help' for getting information about the settings"
 #define R2Settings_PATTERN "Please execute Artoo with the command: artoo filename"
 
+#define R2Settings_WRONG_PARAM "Wrong parameter '%s'"
 #define R2Settings_HELP_ENABLE_COLORS "--enable-colors\t\tEnable the use of colors by the terminal\n"
 #define R2Settings_HELP_DISABLE_COLORS "--disable-colors\tDisable the use of colors by the terminal\n"
 
@@ -20,6 +21,7 @@ static char* R2Settings_getVersion();
 static char* R2Settings_getHelpOption();
 static char* R2Settings_getHintAboutInitFile();
 static char* R2Settings_getFullHelp();
+static char* R2Settings_getWrongParams(char *param);
 static bool  R2Settings_handleArgs(int argc, char **argv);
 
 bool R2Settings_init(int argc, char **argv)
@@ -44,9 +46,28 @@ static bool R2Settings_handleArgs(int argc, char **argv)
  
   for (int i = 0; i < argc; i++)
   {
-    if (strcmp(argv[i], "--help") == 0)
+    if (i == 0)
+    {
+      continue;
+    }
+    else if (strcmp(argv[i], "--help") == 0)
     {
       printf("\n%s\n", R2Settings_getFullHelp());
+      return false;
+    }
+    else if (strcmp(argv[i], "--enable-colors") == 0)
+    {
+      const bool R2_SHOULD_NOT_USE_COLORS = false; 
+    }
+    else if (strcmp(argv[i], "--diable-colors") == 0)
+    {
+      const bool R2_SHOULD_NOT_USE_COLORS = true;
+    }
+    else
+    {
+      char *formattedStr = R2Settings_getWrongParams(argv[i]);
+      printf("%s\n%s\n", formattedStr, R2Settings_getHelpOption());
+      free(formattedStr);
       return false;
     }
   } 
@@ -72,4 +93,12 @@ static char* R2Settings_getHintAboutInitFile()
 static char* R2Settings_getFullHelp()
 {
   return R2Settings_FULL_HELP;
+}
+
+static char* R2Settings_getWrongParams(char *param)
+{
+  int length = strlen(R2Settings_WRONG_PARAM) -2 + strlen(param);
+  char *finalStr = (char *) malloc(sizeof(char) * length);
+  sprintf(finalStr, R2Settings_WRONG_PARAM, param);
+  return finalStr;
 }
