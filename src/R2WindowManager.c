@@ -27,6 +27,8 @@ static void R2WindowManager_deinit();
 static void R2WindowManager_resizeHandler(int sig);
 static void R2WindowManager_setWindows();
 
+char *R2_FILE_NAME;
+
 void R2WindowManager_run()
 {
   R2WindowManager_init();
@@ -34,6 +36,7 @@ void R2WindowManager_run()
 
   while(1)  
   {
+    wprintw(R2WindowManager_editorWin->window, R2_FILE_NAME);
     wgetch(R2WindowManager_editorWin->window); 
   }  
 

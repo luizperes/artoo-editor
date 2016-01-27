@@ -24,6 +24,10 @@ static char* R2Settings_getFullHelp();
 static char* R2Settings_getWrongParams(char *param);
 static bool  R2Settings_handleArgs(int argc, char **argv);
 
+// "R2Settings.h"
+bool R2_SHOULD_NOT_USE_COLORS = false;
+char* R2_FILE_NAME;
+
 bool R2Settings_init(int argc, char **argv)
 {
   if (argc == 1)
@@ -41,9 +45,6 @@ bool R2Settings_init(int argc, char **argv)
 
 static bool R2Settings_handleArgs(int argc, char **argv)
 {
-  // "R2Settings.h"
-  const bool R2_SHOULD_NOT_USE_COLORS = false;
- 
   for (int i = 0; i < argc; i++)
   {
     if (i == 0)
@@ -57,11 +58,11 @@ static bool R2Settings_handleArgs(int argc, char **argv)
     }
     else if (strcmp(argv[i], "--enable-colors") == 0)
     {
-      const bool R2_SHOULD_NOT_USE_COLORS = false; 
+      R2_SHOULD_NOT_USE_COLORS = false; 
     }
     else if (strcmp(argv[i], "--diable-colors") == 0)
     {
-      const bool R2_SHOULD_NOT_USE_COLORS = true;
+      R2_SHOULD_NOT_USE_COLORS = true;
     }
     else  if (strstr(argv[i], "-") != NULL || strstr(argv[i], "--") != NULL)
     { 
@@ -72,7 +73,7 @@ static bool R2Settings_handleArgs(int argc, char **argv)
     }
     else
     {
-      const char* R2_FILE_NAME = argv[i];
+      R2_FILE_NAME = argv[i];
     }
   } 
 

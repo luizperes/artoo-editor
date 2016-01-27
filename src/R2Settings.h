@@ -19,8 +19,8 @@ typedef struct
   int y;
 }R2Point;
 
-extern const bool  R2_SHOULD_NOT_USE_COLORS;
-extern const char* R2_FILE_NAME;
+extern bool  R2_SHOULD_NOT_USE_COLORS;
+extern char* R2_FILE_NAME;
 
 bool R2Settings_init(int argc, char **argv);
 
