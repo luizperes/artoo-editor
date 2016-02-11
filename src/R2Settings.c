@@ -108,3 +108,4 @@ void R2Settings_fileCouldNotLoad(char *filename)
 {
   printf("File '%s' is unable to load or create\n%s\n", filename, R2Settings_getHelpOption());
 }
+
