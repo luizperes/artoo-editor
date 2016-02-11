@@ -5,11 +5,11 @@
  * Copyright Luiz Peres, 2016.
  */
 
-#ifndef _R2WindowManager_H
-#define _R2WindowManager_H
+#ifndef _R2File_H
+#define _R2File_H
 
 #include "include.h"
 
-void R2WindowManager_run();
+bool R2File_loadFile(char *filename);
 
 #endif

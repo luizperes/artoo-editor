@@ -45,13 +45,9 @@ bool R2Settings_init(int argc, char **argv)
 
 static bool R2Settings_handleArgs(int argc, char **argv)
 {
-  for (int i = 0; i < argc; i++)
+  for (int i = 1; i < argc; i++)
   {
-    if (i == 0)
-    {
-      continue;
-    }
-    else if (strcmp(argv[i], "--help") == 0)
+    if (strcmp(argv[i], "--help") == 0)
     {
       printf("\n%s\n", R2Settings_getFullHelp());
       return false;
@@ -64,7 +60,7 @@ static bool R2Settings_handleArgs(int argc, char **argv)
     {
       R2_SHOULD_NOT_USE_COLORS = true;
     }
-    else  if (strstr(argv[i], "-") != NULL || strstr(argv[i], "--") != NULL)
+    else  if ((strstr(argv[i], "-") != NULL || strstr(argv[i], "--") != NULL) && argv[i][0] != '/')
     { 
       char *formattedStr = R2Settings_getWrongParams(argv[i]);
       printf("%s\n%s\n", formattedStr, R2Settings_getHelpOption());
@@ -106,4 +102,9 @@ static char* R2Settings_getWrongParams(char *param)
   char *finalStr = (char *) malloc(sizeof(char) * length);
   sprintf(finalStr, R2Settings_WRONG_PARAM, param);
   return finalStr;
+}
+
+void R2Settings_fileCouldNotLoad(char *filename)
+{
+  printf("File '%s' is unable to load or create\n%s\n", filename, R2Settings_getHelpOption());
 }

@@ -6,6 +6,7 @@
  */
 
 #include "R2Settings.h"
+#include "R2File.h"
 #include "R2WindowManager.h"
 #include "R2Window.h"
 
@@ -31,13 +32,17 @@ char *R2_FILE_NAME;
 
 void R2WindowManager_run()
 {
+  if (!R2File_loadFile(R2_FILE_NAME))
+  {
+    R2Settings_fileCouldNotLoad(R2_FILE_NAME);
+    return;
+  }
+
   R2WindowManager_init();
   R2WindowManager_setWindows();
 
   while(1)  
   {
-    wprintw(R2WindowManager_editorWin->window, R2_FILE_NAME);
-    wgetch(R2WindowManager_editorWin->window); 
   }  
 
   R2WindowManager_deinit();
@@ -97,6 +102,3 @@ static void R2WindowManager_deinit()
   endwin();
 }
 
-void R2WindowManager_stop()
-{
-}

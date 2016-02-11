@@ -23,5 +23,6 @@ extern bool  R2_SHOULD_NOT_USE_COLORS;
 extern char* R2_FILE_NAME;
 
 bool R2Settings_init(int argc, char **argv);
+void R2Settings_fileCouldNotLoad(char *filename);
 
 #endif
