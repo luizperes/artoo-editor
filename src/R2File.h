@@ -10,6 +10,15 @@
 
 #include "include.h"
 
-bool R2File_loadFile(char *filename);
+typedef struct _R2File
+{
+  char *fileName;
+  char *swpFileName;
+} R2File;
+
+R2File* R2File_new(char *filename);
+void R2File_release(R2File* this);
+
+bool R2File_loadFile(R2File* this);
 
 #endif

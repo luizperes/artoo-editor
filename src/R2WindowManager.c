@@ -21,6 +21,7 @@
 // we refresh the window through SIGWINCH
 R2Window *R2WindowManager_editorWin;
 R2Window *R2WindowManager_terminalWin;
+R2File   *R2WindowManager_mainFile;
 
 static void R2WindowManager_init();
 static void R2WindowManager_reinit();
@@ -32,7 +33,8 @@ char *R2_FILE_NAME;
 
 void R2WindowManager_run()
 {
-  if (!R2File_loadFile(R2_FILE_NAME))
+  R2WindowManager_mainFile = R2File_new(R2_FILE_NAME);
+  if (!R2File_loadFile(R2WindowManager_mainFile))
   {
     R2Settings_fileCouldNotLoad(R2_FILE_NAME);
     return;
@@ -99,6 +101,7 @@ static void R2WindowManager_deinit()
 {
   R2Window_release(R2WindowManager_editorWin);
   R2Window_release(R2WindowManager_terminalWin);
+  R2File_release(R2WindowManager_mainFile);
   endwin();
 }
 
