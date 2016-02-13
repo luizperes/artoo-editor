@@ -7,7 +7,7 @@
 
 #include "R2File.h"
 
-static bool isThereValidDirectory(char *filename);
+static bool R2File_isThereValidDirectory(R2File *this);
 
 R2File* R2File_new(char *fileName)
 {
@@ -32,7 +32,7 @@ bool R2File_loadFile(R2File *this)
 {
   FILE *f = NULL;
 
-  if (!isThereValidDirectory(this->fileName))
+  if (!R2File_isThereValidDirectory(this))
   {
     return false;
   } 
@@ -40,31 +40,39 @@ bool R2File_loadFile(R2File *this)
   bool fileExists = access(this->fileName, F_OK) != -1;
   bool swpFileExists = access(this->swpFileName, F_OK) != -1;
 
-  // check if file exists
-  if (fileExists)
+  if (fileExists && swpFileExists)
   {
-    printf("file exists");
+    // TODO: ask the user if he wants to work with the previous swap or 
+    // delete the swap file.
+  }
+  else if (!fileExists && swpFileExists)
+  {
+    // TODO: delete swap and create a new one.
+  }
+  else if (fileExists && !swpFileExists)
+  {
+    // TODO: copy file and rename it to the swap one.
   }
   else
   {
-    printf("File does not exist");
+    // TODO: create new swap file only.
   }
 
   return f;
 }
 
-static bool isThereValidDirectory(char *filename)
+static bool R2File_isThereValidDirectory(R2File *this)
 {
   char *theFile;
-  theFile = strrchr(filename, '/');
+  theFile = strrchr(this->fileName, '/');
 
   if (theFile)
   {
-    int size = strlen(filename) - strlen(theFile);
+    int size = strlen(this->fileName) - strlen(theFile);
     if (size)
     {
       char *theDirectory = (char *)  malloc(sizeof(char) * size);
-      memcpy(theDirectory, filename, size);
+      memcpy(theDirectory, this->fileName, size);
       struct stat st = {0};
       if (stat(theDirectory, &st) == -1)
       {
