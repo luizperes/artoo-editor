@@ -58,6 +58,7 @@ bool R2File_loadFile(R2File *this)
     // TODO: create new swap file only.
   }
 
+  this->file = f;
   return f;
 }
 
