@@ -6,8 +6,10 @@
  */
 
 #include "R2File.h"
+#include "R2Util.h"
 
 static bool R2File_isThereValidDirectory(R2File *this);
+static bool R2File_copyFile(char* file, char* cpFile);
 
 R2File* R2File_new(char *fileName)
 {
@@ -24,6 +26,7 @@ R2File* R2File_new(char *fileName)
 
 void R2File_release(R2File* this)
 {
+  fclose(this->file);
   free(this->swpFileName);
   free(this);
 }
@@ -39,27 +42,40 @@ bool R2File_loadFile(R2File *this)
  
   bool fileExists = access(this->fileName, F_OK) != -1;
   bool swpFileExists = access(this->swpFileName, F_OK) != -1;
-
+  
   if (fileExists && swpFileExists)
   {
-    // TODO: ask the user if he wants to work with the previous swap or 
+    // ask the user if he wants to work with the previous swap or 
     // delete the swap file.
+    if (R2Util_confirmationDialog("A swap file already exists. Do you want to delete it?"))
+    {
+      remove(this->swpFileName);
+    }
   }
   else if (!fileExists && swpFileExists)
   {
-    // TODO: delete swap and create a new one.
+    // delete swap and create a new one.
+    remove(this->swpFileName); 
   }
   else if (fileExists && !swpFileExists)
   {
-    // TODO: copy file and rename it to the swap one.
-  }
-  else
-  {
-    // TODO: create new swap file only.
+    // copy the file to the swap one
+    if (!R2File_copyFile(this->fileName, this->swpFileName))
+    {
+      return false;
+    }
   }
 
+  char *swpMode = access(this->swpFileName, F_OK ) != -1 ? "r+" : "w+"; 
+  f = fopen(this->swpFileName, swpMode);
   this->file = f;
   return f;
+}
+
+void R2File_saveFile(R2File* this)
+{
+  // TODO: Save the file
+  // Just rename the swap file to the real file
 }
 
 static bool R2File_isThereValidDirectory(R2File *this)
@@ -85,6 +101,29 @@ static bool R2File_isThereValidDirectory(R2File *this)
       free(theDirectory);
     }
   }
+
+  return true;
+}
+
+static bool R2File_copyFile(char* file, char* cpFile)
+{
+  FILE *f = fopen(file, "r");
+  if (f == NULL)
+  {
+    printf("There was an error trying to read '%s' file.", file);
+    return false;
+  }
+
+  FILE *fWrite = fopen(cpFile, "w");
+  int c = fgetc(f);
+  while(c != EOF)
+  {
+    fputc(c, fWrite);
+    c = fgetc(f);
+  }
+
+  fclose(f);
+  fclose(fWrite);
 
   return true;
 }

@@ -5,17 +5,11 @@
  * Copyright Luiz Peres, 2016.
  */
 
-#ifndef _INCLUDE_H
-#define _INCLUDE_H
+#ifndef _R2Util_H
+#define _R2Util_H
 
-#include <stdbool.h>
-#include <curses.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <ctype.h>
+#include "include.h"
+
+bool R2Util_confirmationDialog(char *msg);
 
 #endif
