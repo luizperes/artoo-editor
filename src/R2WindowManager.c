@@ -9,6 +9,7 @@
 #include "R2File.h"
 #include "R2WindowManager.h"
 #include "R2Window.h"
+#include "R2Util.h"
 
 #define PARENT stdscr
 #define R2WindowManager_getParentWindowMaxYX(_y, _x) getmaxyx(PARENT, _y, _x)
@@ -27,6 +28,7 @@ static void R2WindowManager_init();
 static void R2WindowManager_reinit();
 static void R2WindowManager_deinit();
 static void R2WindowManager_resizeHandler(int sig);
+static void R2WindowManager_terminateHandler(int sig);
 static void R2WindowManager_setWindows();
 
 char *R2_FILE_NAME;
@@ -74,6 +76,7 @@ static void R2WindowManager_init()
   cbreak();
   noecho();
   signal(SIGWINCH, R2WindowManager_resizeHandler);
+  signal(SIGINT, R2WindowManager_terminateHandler);  
 
   R2WindowManager_editorWin = NULL;
   R2WindowManager_terminalWin = NULL;
@@ -95,6 +98,16 @@ static void R2WindowManager_resizeHandler(int sig)
 {
   R2WindowManager_reinit();
   R2WindowManager_setWindows();
+}
+
+static void R2WindowManager_terminateHandler(int sig)
+{
+  if(R2Util_confirmationDialog("Would you like to save the current file?"))
+  {
+    // save file
+  }
+
+  R2WindowManager_deinit();
 }
 
 static void R2WindowManager_deinit()
