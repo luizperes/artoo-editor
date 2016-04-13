@@ -27,11 +27,13 @@ R2File   *R2WindowManager_mainFile;
 static void R2WindowManager_init();
 static void R2WindowManager_reinit();
 static void R2WindowManager_deinit();
+static void R2WindowManager_deinitFile();
 static void R2WindowManager_resizeHandler(int sig);
 static void R2WindowManager_terminateHandler(int sig);
 static void R2WindowManager_setWindows();
 
 char *R2_FILE_NAME;
+volatile int R2WindowManager_keepRunning = true;
 
 void R2WindowManager_run()
 {
@@ -45,8 +47,9 @@ void R2WindowManager_run()
   R2WindowManager_init();
   R2WindowManager_setWindows();
 
-  while(1)  
+  while(R2WindowManager_keepRunning)  
   {
+     // do stuff 
   }  
 
   R2WindowManager_deinit();
@@ -102,19 +105,28 @@ static void R2WindowManager_resizeHandler(int sig)
 
 static void R2WindowManager_terminateHandler(int sig)
 {
-  if(R2Util_confirmationDialog("Would you like to save the current file?"))
-  {
-    // save file
-  }
-
-  R2WindowManager_deinit();
+  signal(sig, SIG_IGN);
+  R2WindowManager_keepRunning = false;
 }
 
 static void R2WindowManager_deinit()
 {
   R2Window_release(R2WindowManager_editorWin);
   R2Window_release(R2WindowManager_terminalWin);
-  R2File_release(R2WindowManager_mainFile);
   endwin();
+
+  R2WindowManager_deinitFile();
+}
+
+static void R2WindowManager_deinitFile()
+{
+  setvbuf(stdout, NULL, _IOLBF, 0);
+  setvbuf(stderr, NULL, _IONBF, 0);
+  if(R2Util_confirmationDialog("Would you like to save the current file?"))
+  {
+    // save file
+  }
+
+  R2File_release(R2WindowManager_mainFile);
 }
 
