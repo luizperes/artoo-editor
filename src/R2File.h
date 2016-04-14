@@ -21,6 +21,6 @@ R2File* R2File_new(char *filename);
 void R2File_release(R2File* this);
 
 bool R2File_loadFile(R2File* this);
-void R2File_saveFile(R2File* this);
+void R2File_saveFile(R2File* this, bool isQuitting);
 
 #endif

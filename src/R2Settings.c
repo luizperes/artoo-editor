@@ -26,7 +26,7 @@ static bool  R2Settings_handleArgs(int argc, char **argv);
 
 // "R2Settings.h"
 bool R2_SHOULD_NOT_USE_COLORS = false;
-char* R2_FILE_NAME;
+char *R2_FILE_NAME;
 
 bool R2Settings_init(int argc, char **argv)
 {

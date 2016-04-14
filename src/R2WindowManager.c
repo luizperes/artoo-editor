@@ -124,7 +124,7 @@ static void R2WindowManager_deinitFile()
   setvbuf(stderr, NULL, _IONBF, 0);
   if(R2Util_confirmationDialog("Would you like to save the current file?"))
   {
-    // save file
+    R2File_saveFile(R2WindowManager_mainFile, true);
   }
 
   R2File_release(R2WindowManager_mainFile);

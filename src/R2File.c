@@ -10,6 +10,7 @@
 
 static bool R2File_isThereValidDirectory(R2File *this);
 static bool R2File_copyFile(char* file, char* cpFile);
+static bool R2File_fileExists(char* file);
 
 R2File* R2File_new(char *fileName)
 {
@@ -27,6 +28,10 @@ R2File* R2File_new(char *fileName)
 void R2File_release(R2File* this)
 {
   fclose(this->file);
+  if (R2File_fileExists(this->swpFileName))
+  {
+    remove(this->swpFileName);
+  }
   free(this->swpFileName);
   free(this);
 }
@@ -40,8 +45,8 @@ bool R2File_loadFile(R2File *this)
     return false;
   } 
  
-  bool fileExists = access(this->fileName, F_OK) != -1;
-  bool swpFileExists = access(this->swpFileName, F_OK) != -1;
+  bool fileExists = R2File_fileExists(this->fileName);
+  bool swpFileExists = R2File_fileExists(this->swpFileName);
   
   if (fileExists && swpFileExists)
   {
@@ -66,16 +71,32 @@ bool R2File_loadFile(R2File *this)
     }
   }
 
-  char *swpMode = access(this->swpFileName, F_OK ) != -1 ? "r+" : "w+"; 
+  char *swpMode = R2File_fileExists(this->swpFileName) ? "r+" : "w+"; 
   f = fopen(this->swpFileName, swpMode);
   this->file = f;
   return f;
 }
 
-void R2File_saveFile(R2File* this)
+void R2File_saveFile(R2File* this, bool isQuitting)
 {
-  // TODO: Save the file
-  // Just rename the swap file to the real file
+  if (isQuitting)
+  {
+    if(R2File_fileExists(this->fileName))
+    {
+      remove(this->fileName);
+    }
+    
+    rename(this->swpFileName, this->fileName);
+  }
+  else
+  {
+    R2File_copyFile(this->swpFileName, this->fileName);
+  }
+}
+
+static bool R2File_fileExists(char* file)
+{
+  return access(file, F_OK) != -1;
 }
 
 static bool R2File_isThereValidDirectory(R2File *this)
