@@ -14,7 +14,7 @@ The reason why I want to do that is:
 * `Because I think text editors for terminals are cool.`
 * `Because I did not allow myself to use "colored" text editors for C unless I built my own.`
 * `Because of the challenge.`
-* `Because I want to split the __terminal window__ with the __text editor window__. In this case, I can even send my files to my Git repositories without doing __:wq__ first.`
+* `Because I want to split the terminal window with the text editor window. In this case, I can even send my files to my Git repositories without doing first.`
 * `Because just because.`
 * `And last, but not least, because I can. :)`
 
