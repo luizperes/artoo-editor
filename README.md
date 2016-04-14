@@ -11,12 +11,12 @@ Well, imagine that day when you are tired of __vi/vim__, you don't want emacs, p
 ### Reason for a new text editor for terminals
 The reason why I want to do that is:
 
-__[][][]__ Because I think text editors for terminals are cool.<br />
-__[][][][][][][][]__ Because I did not allow myself to use "colored" text editors for C unless I built my own.<br />
-__[][][][][][][][][][][][][][]__ Because of the challenge.<br />
-__[]__ Because I want to split the __terminal window__ with the __text editor window__. In this case, I can even send my files to my Git repositories without doing __:wq__ first.<br />
-__[][][][][][][][][][][][][][][][][][]__ Because just because.<br />
-__[][][][][][][][][][][][][][][][][][]__ And last, but not least, because I can. :)<br />
+* `Because I think text editors for terminals are cool.`
+* `Because I did not allow myself to use "colored" text editors for C unless I built my own.`
+* `Because of the challenge.`
+* `Because I want to split the __terminal window__ with the __text editor window__. In this case, I can even send my files to my Git repositories without doing __:wq__ first.`
+* `Because just because.`
+* `And last, but not least, because I can. :)`
 
 ### Help
 Feel free to help the repository, sending your pull requests.
