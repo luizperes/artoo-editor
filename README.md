@@ -11,12 +11,12 @@ Well, imagine that day when you are tired of __vi/vim__, you don't want emacs, p
 ### Reason for a new text editor for terminals
 The reason why I want to do that is:
 
-* `Because I think text editors for terminals are cool.`
-* `Because I did not allow myself to use "colored" text editors for C unless I built my own.`
-* `Because of the challenge.`
-* `Because I want to split the terminal window with the text editor window. In this case, I can even send my files to my Git repositories without doing first.`
-* `Because just because.`
-* `And last, but not least, because I can. :)`
+* _Because_ I think text editors for terminals are __cool__.
+* _Because_ I did not allow myself to use `"colored"` text editors for C unless I built my own.
+* _Because_ of the __challenge__.
+* _Because_ I want to split the terminal window with the text editor window. In this case, I can even send my files to my Git repositories without exiting.
+* _Because_ just __`cause__.
+* And last, but not least, _because_ __I can__. :)
 
 ### Help
 Feel free to help the repository, sending your pull requests.
