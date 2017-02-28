@@ -22,5 +22,5 @@ The reason why I want to do that is:
 Feel free to help the repository, sending your pull requests.
 
 ### LICENSE
-This project extends [GNU GPL v. 2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html), so be aware of that, regarding copying, modifying and (re)destributing the application. 
+This project extends [GNU GPL v. 3](https://www.gnu.org/licenses/gpl.html), so be aware of that, regarding copying, modifying and (re)destributing the application. 
 
