@@ -81,6 +81,9 @@ static void R2WindowManager_handleKey(R2Window *windowObj, int ch)
   int y, x;
   R2Window_getCursorYX(windowObj, y, x);
   R2Window_gotoYXAndPutChar(windowObj, y, x, ch);
+
+  // the line below works out
+  // R2Window_gotoYXAndPutChar(windowObj, y, x, ch | A_BOLD | A_UNDERLINE);
 }
 
 static void R2WindowManager_setWindows()
