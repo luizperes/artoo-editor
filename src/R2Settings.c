@@ -56,7 +56,7 @@ static bool R2Settings_handleArgs(int argc, char **argv)
     {
       R2_SHOULD_NOT_USE_COLORS = false; 
     }
-    else if (strcmp(argv[i], "--diable-colors") == 0)
+    else if (strcmp(argv[i], "--disable-colors") == 0)
     {
       R2_SHOULD_NOT_USE_COLORS = true;
     }

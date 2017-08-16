@@ -12,8 +12,8 @@ artoo: $(OBJ)
 	$(CC) $(DEBUG) -o $@ $^ $(CFLAGS)
 
 clean:
-	rm $(OBJ) *.h.gch
+	rm $(OBJ)
 
-debug: DEBUG = -g
+debug: DEBUG = -g -O0
 debug: artoo
 
