@@ -49,7 +49,11 @@ void R2WindowManager_run()
 
   while(R2WindowManager_keepRunning)  
   {
-     // do stuff 
+     int c = wgetch(R2WindowManager_editorWin->window);
+     switch(c) {
+      case ERR: continue;
+      default: R2Window_gotoYXAndPrint(R2WindowManager_terminalWin,0, 0, "blah"); R2Window_refresh(R2WindowManager_terminalWin);
+     }
   }  
 
   R2WindowManager_deinit();
@@ -69,6 +73,10 @@ static void R2WindowManager_setWindows()
     R2Window_resize(R2WindowManager_editorWin, LINES - SIZE_ROWS_TERMINAL, COLS);
     R2Window_resizeAndGotoYX(R2WindowManager_terminalWin, SIZE_ROWS_TERMINAL, COLS, LINES - SIZE_ROWS_TERMINAL, 0);
   }
+
+  // TODO: check if nodelay is not causing side effects later.
+  nodelay(R2WindowManager_terminalWin->window, true);
+  nodelay(R2WindowManager_editorWin->window, true);
 
   R2WindowManager_updateAllWindows();
 }
