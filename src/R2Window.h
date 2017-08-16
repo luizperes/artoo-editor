@@ -30,6 +30,7 @@ typedef struct _R2Window
 #define R2Window_refresh(_this) wrefresh(_this->window)
 #define R2Window_gotoYX(_this, _y, _x) wmove(_this->window, _y, _x)
 #define R2Window_gotoYXAndPrint(_this, _y, _x, _str) mvwprintw(_this->window, _y, _x, _str) 
+#define R2Window_gotoYXAndPutChar(_this, _y, _x, _ch) mvwaddch(_this->window, _y, _x, _ch)
 #define R2Window_move(_this, _y, _x) mvwin(_this->window, _y, _x)
 #define R2Window_resize(_this, _nlines, _ncols) R2Window_resizeAndGotoYX(_this, _nlines, _ncols, 0, 0) 
 #define R2Window_clear(_this) wclear(_this->window)

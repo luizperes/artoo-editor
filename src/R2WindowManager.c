@@ -18,6 +18,9 @@
 #define EDITOR_WIN_TYPE_BORDER BT_NONE
 #define TERMINAL_WIN_TYPE_BORDER BT_NONE 
 
+// KEYS
+#define ESC_KEY 27
+
 // This global variables exist because it is necessary when
 // we refresh the window through SIGWINCH
 R2Window *R2WindowManager_editorWin;
@@ -31,6 +34,7 @@ static void R2WindowManager_deinitFile();
 static void R2WindowManager_resizeHandler(int sig);
 static void R2WindowManager_terminateHandler(int sig);
 static void R2WindowManager_setWindows();
+static void R2WindowManager_handleKey(R2Window *windowObj, int ch);
 
 char *R2_FILE_NAME;
 volatile int R2WindowManager_keepRunning = true;
@@ -47,16 +51,36 @@ void R2WindowManager_run()
   R2WindowManager_init();
   R2WindowManager_setWindows();
 
+  // set the initial window
+  R2Window *curWin = R2WindowManager_editorWin;
+  R2Window_refresh(curWin);
+
   while(R2WindowManager_keepRunning)  
   {
-     int c = wgetch(R2WindowManager_editorWin->window);
-     switch(c) {
-      case ERR: continue;
-      default: R2Window_gotoYXAndPrint(R2WindowManager_terminalWin,0, 0, "blah"); R2Window_refresh(R2WindowManager_terminalWin);
+     int c = wgetch(curWin->window);
+     switch(c)
+     {
+       case ERR:
+         continue;
+       case ESC_KEY:
+         curWin = curWin == R2WindowManager_editorWin ? R2WindowManager_terminalWin : R2WindowManager_editorWin;
+         R2Window_refresh(curWin);
+         break;
+       default:
+         R2WindowManager_handleKey(curWin, c);
+         R2Window_refresh(curWin);
+         break;
      }
   }  
 
   R2WindowManager_deinit();
+}
+
+static void R2WindowManager_handleKey(R2Window *windowObj, int ch)
+{
+  int y, x;
+  R2Window_getCursorYX(windowObj, y, x);
+  R2Window_gotoYXAndPutChar(windowObj, y, x, ch);
 }
 
 static void R2WindowManager_setWindows()
