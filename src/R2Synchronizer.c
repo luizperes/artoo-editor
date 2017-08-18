@@ -8,7 +8,18 @@
 #include "R2Synchronizer.h"
 #include "R2Util.h"
 
-R2Synchronizer* R2Synchronizer_mirror(R2Window *windowObj, R2File *fileObj)
+void R2Synchronizer_mirror(R2Window *windowObj, R2File *fileObj)
 {
+  if (fileObj)
+  {
+    int ch = 0;
+    // don't open nor close file
+    while ((ch = getc(fileObj->file)) != EOF)
+    {
+      int y, x;
+      R2Window_getCursorYX(windowObj, y, x);
+      R2Window_gotoYXAndPutChar(windowObj, y, x, ch);
+    }
+  }
 }
 

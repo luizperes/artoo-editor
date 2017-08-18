@@ -12,6 +12,6 @@
 #include "R2File.h"
 #include "R2Window.h"
 
-R2Synchronizer* R2Synchronizer_mirror(R2Window *windowObj, R2File *fileObj);
+void R2Synchronizer_mirror(R2Window *windowObj, R2File *fileObj);
 
 #endif

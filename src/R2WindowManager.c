@@ -54,6 +54,7 @@ void R2WindowManager_run()
 
   // set the initial window
   R2Window *curWin = R2WindowManager_editorWin;
+  R2Synchronizer_mirror(curWin, R2WindowManager_mainFile);
   R2Window_refresh(curWin);
 
   while(R2WindowManager_keepRunning)  
@@ -104,7 +105,10 @@ static void R2WindowManager_setWindows()
 
   // TODO: check if nodelay is not causing side effects later.
   nodelay(R2WindowManager_terminalWin->window, true);
+  scrollok(R2WindowManager_terminalWin->window, true);
+
   nodelay(R2WindowManager_editorWin->window, true);
+  scrollok(R2WindowManager_editorWin->window, true);
 
   R2WindowManager_updateAllWindows();
 }
