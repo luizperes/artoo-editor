@@ -10,6 +10,7 @@
 #include "R2WindowManager.h"
 #include "R2Window.h"
 #include "R2Util.h"
+#include "R2Synchronizer.h"
 
 #define PARENT stdscr
 #define R2WindowManager_getParentWindowMaxYX(_y, _x) getmaxyx(PARENT, _y, _x)

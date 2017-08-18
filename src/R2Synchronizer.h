@@ -12,14 +12,6 @@
 #include "R2File.h"
 #include "R2Window.h"
 
-typedef struct _R2Synchronizer
-{
-  R2File   *fileObj;
-  R2Window *windowObj;
-  bool      weak;
-} R2Synchronizer;
-
-R2Synchronizer* R2Synchronizer_new(R2File *fileObj, R2Window *windowObj, bool weak);
-void R2Synchronizer_release(R2Synchronizer* this);
+R2Synchronizer* R2Synchronizer_mirror(R2Window *windowObj, R2File *fileObj);
 
 #endif
