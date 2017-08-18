@@ -19,7 +19,7 @@ typedef enum _R2Border_Type
 
 typedef struct _R2Window
 {
-  WINDOW *window;
+  WINDOW       *window;
   R2Border_Type borderType;
 } R2Window;
 
