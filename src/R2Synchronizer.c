@@ -10,6 +10,9 @@
 
 void R2Synchronizer_mirror(R2Window *windowObj, R2File *fileObj)
 {
+  // (re)set cursor to the begin of the file
+  fseek(fileObj->file, 0, SEEK_SET);
+
   if (fileObj)
   {
     int ch = 0;

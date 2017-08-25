@@ -17,7 +17,7 @@
 #define R2WindowManager_updateAllWindows() doupdate()
 #define SIZE_ROWS_TERMINAL 3
 #define EDITOR_WIN_TYPE_BORDER BT_NONE
-#define TERMINAL_WIN_TYPE_BORDER BT_NONE 
+#define TERMINAL_WIN_TYPE_BORDER BT_NONE
 
 // KEYS
 #define ESC_KEY 27
@@ -63,6 +63,7 @@ void R2WindowManager_run()
      switch(c)
      {
        case ERR:
+       case KEY_RESIZE:
          continue;
        case ESC_KEY:
          curWin = curWin == R2WindowManager_editorWin ? R2WindowManager_terminalWin : R2WindowManager_editorWin;
@@ -141,6 +142,9 @@ static void R2WindowManager_resizeHandler(int sig)
 {
   R2WindowManager_reinit();
   R2WindowManager_setWindows();
+  R2Window_gotoYX(R2WindowManager_editorWin, 0, 0);
+  R2Synchronizer_mirror(R2WindowManager_editorWin, R2WindowManager_mainFile);
+  R2WindowManager_updateAllWindows();
 }
 
 static void R2WindowManager_terminateHandler(int sig)
