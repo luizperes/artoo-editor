@@ -17,7 +17,7 @@
 #define R2WindowManager_updateAllWindows() doupdate()
 #define SIZE_ROWS_TERMINAL 3
 #define EDITOR_WIN_TYPE_BORDER BT_NONE
-#define TERMINAL_WIN_TYPE_BORDER BT_NONE 
+#define TERMINAL_WIN_TYPE_BORDER BT_NONE
 
 // KEYS
 #define ESC_KEY 27
@@ -83,9 +83,6 @@ static void R2WindowManager_handleKey(R2Window *windowObj, int ch)
   int y, x;
   R2Window_getCursorYX(windowObj, y, x);
   R2Window_gotoYXAndPutChar(windowObj, y, x, ch);
-
-  // the line below works out
-  // R2Window_gotoYXAndPutChar(windowObj, y, x, ch | A_BOLD | A_UNDERLINE);
 }
 
 static void R2WindowManager_setWindows()
