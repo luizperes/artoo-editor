@@ -10,19 +10,24 @@
 
 void R2Synchronizer_mirror(R2Window *windowObj, R2File *fileObj)
 {
-  // (re)set cursor to the begin of the file
-  fseek(fileObj->file, 0, SEEK_SET);
-
-  if (fileObj)
+  FILE *f = fopen(fileObj->swpFileName, "r");
+  
+  if (f)
   {
+    // (re)set cursor to the begin of the file
+    fseek(f, 0, SEEK_SET);
+
     int ch = 0;
     // don't open nor close file
-    while ((ch = getc(fileObj->file)) != EOF)
+    while ((ch = getc(f)) != EOF)
     {
       int y, x;
       R2Window_getCursorYX(windowObj, y, x);
       R2Window_gotoYXAndPutChar(windowObj, y, x, ch);
     }
+
+    R2Window_gotoYX(windowObj, 0, 0);
+    fclose(f);
   }
 }
 

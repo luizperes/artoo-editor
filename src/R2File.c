@@ -27,7 +27,6 @@ R2File* R2File_new(char *fileName)
 
 void R2File_release(R2File* this)
 {
-  fclose(this->file);
   if (R2File_fileExists(this->swpFileName))
   {
     remove(this->swpFileName);
@@ -38,8 +37,6 @@ void R2File_release(R2File* this)
 
 bool R2File_loadFile(R2File *this)
 {
-  FILE *f = NULL;
-
   if (!R2File_isThereValidDirectory(this))
   {
     return false;
@@ -72,9 +69,9 @@ bool R2File_loadFile(R2File *this)
   }
 
   char *swpMode = R2File_fileExists(this->swpFileName) ? "r+" : "w+"; 
-  f = fopen(this->swpFileName, swpMode);
-  this->file = f;
-  return f;
+  FILE *f = fopen(this->swpFileName, swpMode);
+  fclose(f);
+  return true;
 }
 
 void R2File_saveFile(R2File* this, bool isQuitting)

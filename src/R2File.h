@@ -12,7 +12,6 @@
 
 typedef struct _R2File
 {
-  FILE *file;
   char *fileName;
   char *swpFileName;
 } R2File;
