@@ -8,19 +8,16 @@
 #include "R2File.h"
 #include "R2Util.h"
 
-static bool R2File_isThereValidDirectory(R2File *this);
-static bool R2File_copyFile(char* file, char* cpFile);
-static bool R2File_fileExists(char* file);
+static bool  R2File_isThereValidDirectory(R2File *this);
+static bool  R2File_copyFile(char *file, char *cpFile);
+static bool  R2File_fileExists(char *file);
+static char* R2File_setSwpFileName(char *fileName);
 
 R2File* R2File_new(char *fileName)
 {
   R2File *this = (R2File*) malloc(sizeof(R2File));
   this->fileName = fileName;
-
-  this->swpFileName = (char *) malloc(sizeof(char) * strlen(fileName) + 4);
-  this->swpFileName[0] = '.';
-  strcat(this->swpFileName, fileName);
-  strcat(this->swpFileName, "_r2");
+  this->swpFileName = R2File_setSwpFileName(fileName);
 
   return this;
 }
@@ -33,6 +30,53 @@ void R2File_release(R2File* this)
   }
   free(this->swpFileName);
   free(this);
+}
+
+char* R2File_setSwpFileName(char *fileName)
+{
+  // copy the value at the pointer, so we keep it
+  char *copyFileName = (char *) malloc(sizeof(char) * strlen(fileName));
+  strcpy(copyFileName, fileName);
+
+  char *swpFileName = (char *) malloc(sizeof(char) * strlen(fileName) + 4);
+  char *dot = ".";
+  char *separator = "/";
+  char *terminator = "_r2";
+
+  char *pch, *pchAux;
+  pch = strtok(copyFileName, separator);
+
+  while(pch)
+  {
+    pchAux = strtok(NULL, separator);
+
+    if (pchAux)
+    {
+      strcat(swpFileName, pch);
+      strcat(swpFileName, "/");
+
+      // lookahead
+      pch = strtok(NULL, separator);
+      if (pch)
+      {
+        strcat(swpFileName, pchAux);
+        strcat(swpFileName, "/");
+        continue;
+      }
+
+      // fallthrough
+      pch = pchAux;
+    }
+
+    strcat(swpFileName, dot);
+    strcat(swpFileName, pch);
+    strcat(swpFileName, terminator);
+
+    pch = strtok(NULL, separator);
+  }
+
+  free(copyFileName);
+  return swpFileName;
 }
 
 bool R2File_loadFile(R2File *this)
@@ -52,6 +96,10 @@ bool R2File_loadFile(R2File *this)
     if (R2Util_confirmationDialog("A swap file already exists. Do you want to delete it?"))
     {
       remove(this->swpFileName);
+      if (!R2File_copyFile(this->fileName, this->swpFileName))
+      {
+        return false;
+      }
     }
   }
   else if (!fileExists && swpFileExists)
