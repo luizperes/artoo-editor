@@ -1,12 +1,12 @@
+> This version is COMPLETELY unstable, NO warranty. Don't you dare using it for real :D
 # Artoo Editor
 Artoo Editor is a text editor for terminals bases on the ncurses library.
 
 ### How to use it
 Well, imagine that day when you are tired of __vi/vim__, you don't want emacs, plus, you want to change and/or create new themes for your terminal very easily (like using a xml or a json). That is when you gonna choose __artoo__.
 
-- Artoo is gonna be your best friend when you are fighting against the Empire. 
-- Artoo is meant for you to show off your new super cool "droid".
-- Do you like text editors? __Ar__ __too__ :v
+### Why Artoo?
+Because I couldn't come up with a better name.
 
 ### Reason for a new text editor for terminals
 The reason why I want to do that is:
