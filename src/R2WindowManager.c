@@ -36,6 +36,7 @@ static void R2WindowManager_resizeHandler(int sig);
 static void R2WindowManager_terminateHandler(int sig);
 static void R2WindowManager_setWindows();
 static void R2WindowManager_handleKey(R2Window *windowObj, int ch);
+static void R2WindowManager_moveCursor(R2Window *windowObj, int key);
 
 char *R2_FILE_NAME;
 volatile int R2WindowManager_keepRunning = true;
@@ -65,6 +66,12 @@ void R2WindowManager_run()
        case ERR:
        case KEY_RESIZE:
          continue;
+       case KEY_LEFT:
+       case KEY_UP:
+       case KEY_RIGHT:
+       case KEY_DOWN:
+         R2WindowManager_moveCursor(curWin, c);
+         break;
        case ESC_KEY:
          curWin = curWin == R2WindowManager_editorWin ? R2WindowManager_terminalWin : R2WindowManager_editorWin;
          R2Window_refresh(curWin);
@@ -77,6 +84,21 @@ void R2WindowManager_run()
   }  
 
   R2WindowManager_deinit();
+}
+
+static void R2WindowManager_moveCursor(R2Window *windowObj, int key)
+{
+  int y, x;
+  R2Window_getCursorYX(windowObj, y, x);
+  switch(key) {
+    case KEY_LEFT:  --x; break;
+    case KEY_UP:    --y; break;
+    case KEY_RIGHT: ++x; break;
+    case KEY_DOWN:  ++y; break;
+    default: return;
+  }
+
+  R2Window_gotoYX(windowObj, y, x);
 }
 
 static void R2WindowManager_handleKey(R2Window *windowObj, int ch)
@@ -104,9 +126,11 @@ static void R2WindowManager_setWindows()
   // TODO: check if nodelay is not causing side effects later.
   nodelay(R2WindowManager_terminalWin->window, true);
   scrollok(R2WindowManager_terminalWin->window, true);
+  keypad(R2WindowManager_terminalWin->window, true);
 
   nodelay(R2WindowManager_editorWin->window, true);
   scrollok(R2WindowManager_editorWin->window, true);
+  keypad(R2WindowManager_editorWin->window, true);
 
   R2WindowManager_updateAllWindows();
 }
