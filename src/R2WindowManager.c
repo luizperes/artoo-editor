@@ -20,7 +20,8 @@
 #define TERMINAL_WIN_TYPE_BORDER BT_NONE
 
 // KEYS
-#define ESC_KEY 27
+#define KEY_ESC  27
+#define KEY_BSPC 127
 
 // This global variables exist because it is necessary when
 // we refresh the window through SIGWINCH
@@ -37,6 +38,7 @@ static void R2WindowManager_terminateHandler(int sig);
 static void R2WindowManager_setWindows();
 static void R2WindowManager_handleKey(R2Window *windowObj, int ch);
 static void R2WindowManager_moveCursor(R2Window *windowObj, int key);
+static void R2WindowManager_backspace(R2Window *windowObj);
 
 char *R2_FILE_NAME;
 volatile int R2WindowManager_keepRunning = true;
@@ -66,15 +68,18 @@ void R2WindowManager_run()
        case ERR:
        case KEY_RESIZE:
          continue;
+       case KEY_ESC:
+         curWin = curWin == R2WindowManager_editorWin ? R2WindowManager_terminalWin : R2WindowManager_editorWin;
+         R2Window_refresh(curWin);
+         break;
+       case KEY_BSPC:
+         R2WindowManager_backspace(curWin);
+         break;
        case KEY_LEFT:
        case KEY_UP:
        case KEY_RIGHT:
        case KEY_DOWN:
          R2WindowManager_moveCursor(curWin, c);
-         break;
-       case ESC_KEY:
-         curWin = curWin == R2WindowManager_editorWin ? R2WindowManager_terminalWin : R2WindowManager_editorWin;
-         R2Window_refresh(curWin);
          break;
        default:
          R2WindowManager_handleKey(curWin, c);
@@ -84,6 +89,12 @@ void R2WindowManager_run()
   }  
 
   R2WindowManager_deinit();
+}
+
+static void R2WindowManager_backspace(R2Window *windowObj)
+{
+  R2WindowManager_moveCursor(windowObj, KEY_LEFT);
+  R2Window_deleteChar(windowObj);
 }
 
 static void R2WindowManager_moveCursor(R2Window *windowObj, int key)

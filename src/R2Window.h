@@ -34,6 +34,8 @@ typedef struct _R2Window
 #define R2Window_move(_this, _y, _x) mvwin(_this->window, _y, _x)
 #define R2Window_resize(_this, _nlines, _ncols) R2Window_resizeAndGotoYX(_this, _nlines, _ncols, 0, 0) 
 #define R2Window_clear(_this) wclear(_this->window)
+#define R2Window_deleteChar(_this) wdelch(_this->window)
+#define R2Window_gotoYXAndDeleteChar(_this, _y, _x) mvwdelch(_this->window, _y, _x)
 
 R2Window* R2Window_new(int nlines, int ncols, int begin_y, int begin_x, R2Border_Type borderType);
 
